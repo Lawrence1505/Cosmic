@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Stock Portfolio</title>
+  <style>
+    /* Base Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    
+    /* Container with fade-in animation */
+    .container {
+      background: #fff;
+      width: 90%;
+      max-width: 800px;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      animation: containerFadeIn 1s ease-out;
+    }
+    
+    /* Title */
+    h1 {
+      color: #27ae60;
+      margin-bottom: 10px;
+      animation: headerSlideIn 1s ease-out;
+    }
+    
+    /* Select dropdown with theme border */
+    select {
+      margin: 15px;
+      padding: 10px;
+      font-size: 1rem;
+      border: 2px solid #27ae60;
+      border-radius: 5px;
+      transition: transform 0.3s ease;
+    }
+    select:hover {
+      transform: scale(1.05);
+    }
+    
+    /* Chart container styles */
+    #portfolioChart {
+      max-width: 600px;
+      width: 100%;
+      height: auto;
+      margin: 20px auto;
+      animation: fadeIn 1s ease-out;
+    }
+    
+    /* Table styles */
+    table {
+      margin: 20px auto;  /* Center the table horizontally */
+      border-collapse: collapse;
+      width: 80%;
+      max-width: 600px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #27ae60;
+      color: #fff;
+    }
+    /* Animate the table rows sequentially */
+    tbody tr {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: tableRowFadeIn 0.6s forwards;
+    }
+    tbody tr:nth-child(1) { animation-delay: 0.2s; }
+    tbody tr:nth-child(2) { animation-delay: 0.4s; }
+    tbody tr:nth-child(3) { animation-delay: 0.6s; }
+    tbody tr:nth-child(4) { animation-delay: 0.8s; }
+    
+    /* Keyframes for animations */
+    @keyframes containerFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes headerSlideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes tableRowFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>User Stock Portfolio</h1>
+    <select id="datasetSelector">
+      <option value="currentValue">Current Value (₹)</option>
+      <option value="todaysGrowth">Today's Growth (%)</option>
+      <option value="numberShares">Number of Shares</option>
+    </select>
+    <canvas id="portfolioChart"></canvas>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Stock</th>
+          <th>Current Value (₹)</th>
+          <th>Growth (%)</th>
+          <th>Number of Shares</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>TATA CHEMICAL</td>
+          <td>₹5000</td>
+          <td>10%</td>
+          <td>500</td>
+        </tr>
+        <tr>
+          <td>HAPPIEST MINDS</td>
+          <td>₹3000</td>
+          <td>5%</td>
+          <td>150</td>
+        </tr>
+        <tr>
+          <td>CDSL</td>
+          <td>₹2000</td>
+          <td>8%</td>
+          <td>100</td>
+        </tr>
+        <tr>
+          <td>WIPRO</td>
+          <td>₹1000</td>
+          <td>12%</td>
+          <td>50</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const ctx = document.getElementById('portfolioChart').getContext('2d');
+
+    // Data for the chart
+    const dataSets = {
+      currentValue: [5000, 3000, 2000, 1000],
+      todaysGrowth: [10, 5, 8, 12],
+      numberShares: [500, 150, 100, 50]
+    };
+
+    // Using a color palette inspired by the theme (#27ae60) and complementary shades
+    const chartColors = ['#27ae60', '#2ecc71', '#16a085', '#1abc9c'];
+
+    // Create the chart
+    let portfolioChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['TATA CHEMICAL', 'HAPPIEST MINDS', 'CDSL', 'WIPRO'],
+        datasets: [{
+          data: dataSets.currentValue, // Default dataset
+          backgroundColor: chartColors,
+          hoverBackgroundColor: chartColors
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top'
+          },
+          title: {
+            display: true,
+            text: 'Current Value (₹)'
+          }
+        },
+        animation: {
+          animateRotate: true,
+          duration: 1500
+        }
+      }
+    });
+
+    // Update chart based on the selected dataset and update the title accordingly
+    document.getElementById('datasetSelector').addEventListener('change', (event) => {
+      const selectedDataset = event.target.value;
+      portfolioChart.data.datasets[0].data = dataSets[selectedDataset];
+      if (selectedDataset === 'currentValue') {
+        portfolioChart.options.plugins.title.text = 'Current Value (₹)';
+      } else if (selectedDataset === 'todaysGrowth') {
+        portfolioChart.options.plugins.title.text = "Today's Growth (%)";
+      } else {
+        portfolioChart.options.plugins.title.text = 'Number of Shares';
+      }
+      portfolioChart.update();
+    });
+  </script>
+</body>
+</html>

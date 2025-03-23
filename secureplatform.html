@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Secure Platform - Animated Features</title>
+  <style>
+    /* Base Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #f6f9fc 0%, #e9eff5 100%);
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      animation: containerFadeIn 1s ease-out;
+    }
+    .header {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #2c3e50;
+      animation: headerSlideIn 1s ease-out;
+    }
+    .paragraph {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+    /* Key Points Grid */
+    .keypoints {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .keypoint {
+      background: #27ae60;
+      color: #fff;
+      padding: 15px 20px;
+      border-radius: 5px;
+      flex: 1 1 150px;
+      cursor: pointer;
+      font-weight: bold;
+      position: relative;
+      /* Start hidden then animate in with a custom delay */
+      opacity: 0;
+      transform: translateY(20px);
+      animation: popIn 0.6s forwards;
+      animation-delay: var(--delay);
+    }
+    .keypoint:hover {
+      transform: scale(1.05);
+      background: #1e8449;
+    }
+    /* Hidden Detail Text */
+    .detail {
+      font-size: 0.85em;
+      margin-top: 10px;
+      color: #def0e6;
+      display: none;
+    }
+    .keypoint.active .detail {
+      display: block;
+      animation: fadeInDetail 0.4s ease forwards;
+    }
+    .footer {
+      margin-top: 25px;
+      font-size: 0.9em;
+      color: #777;
+    }
+    /* Animations */
+    @keyframes containerFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes headerSlideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    @keyframes fadeInDetail {
+      from { opacity: 0; transform: scale(0.95); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="header">Secure Platform</h1>
+    <p class="paragraph">
+      Step into a world where cutting-edge security meets modern design. Our secure platform
+      safeguards your data with state-of-the-art encryption, robust multi-factor authentication,
+      and proactive threat monitoring. Enjoy peace of mind, knowing your digital interactions and data are
+      protected by tailored security features crafted to keep you steps ahead.
+    </p>
+    <div id="keypoints" class="keypoints">
+      <!-- Key points will be injected dynamically -->
+    </div>
+    <p class="footer">* Click on a key point to reveal more on each security feature</p>
+  </div>
+
+  <script>
+    // Security Features Array with Key Points & Details
+    const securityFeatures = [
+      { title: "Encryption", details: "End-to-end encryption safeguards every bit of data." },
+      { title: "Authentication", details: "Robust multi-factor authentication prevents unauthorized access." },
+      { title: "Privacy", details: "Advanced privacy protocols keep your personal information secure." },
+      { title: "Compliance", details: "Adheres to global security standards and regulations." },
+      { title: "Resilience", details: "High-availability systems ensure your service is always on." }
+    ];
+
+    const keypointsContainer = document.getElementById('keypoints');
+    
+    // Create and animate each key point with a custom delay
+    securityFeatures.forEach((feature, index) => {
+      const keypointEl = document.createElement('div');
+      keypointEl.className = 'keypoint';
+      // Set custom delay for staggered animations
+      keypointEl.style.setProperty('--delay', `${index * 0.2}s`);
+      keypointEl.textContent = feature.title;
+  
+      const detailEl = document.createElement('div');
+      detailEl.className = 'detail';
+      detailEl.textContent = feature.details;
+      keypointEl.appendChild(detailEl);
+  
+      // Toggle detailed info with animated reveal on click
+      keypointEl.addEventListener('click', () => {
+        keypointEl.classList.toggle('active');
+      });
+  
+      keypointsContainer.appendChild(keypointEl);
+    });
+  </script>
+</body>
+</html>

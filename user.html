@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Share Dashboard</title>
+  <style>
+    /* Base styling for green and white theme */
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f8fff8; /* light greenish white */
+      font-family: 'Arial', sans-serif;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 800px;
+      width: 90%;
+      background: #fff;
+      border: 2px solid #27ae60;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(39, 174, 96, 0.3);
+      padding: 30px;
+      text-align: center;
+      animation: fadeIn 1s ease-out;
+    }
+    h1, h2 {
+      color: #27ae60;
+      margin-bottom: 20px;
+      animation: slideInDown 0.8s ease-out;
+    }
+    .section {
+      margin-bottom: 30px;
+      animation: slideInLeft 0.8s ease-out;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      text-align: left;
+    }
+    select, input[type="number"], textarea {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #27ae60;
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+      margin-bottom: 15px;
+    }
+    select:focus, input[type="number"]:focus, textarea:focus {
+      outline: none;
+      border-color: #1e8449;
+    }
+    .btn {
+      background: #27ae60;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s ease;
+      animation: slideInUp 0.8s ease-out;
+      margin-bottom: 15px;
+    }
+    .btn:hover {
+      background: #1e8449;
+    }
+    .goal-list, .feedback-list {
+      margin-top: 20px;
+      animation: fadeIn 1s ease-out;
+    }
+    .goal-item, .feedback-item {
+      background: #27ae60;
+      color: #fff;
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: popIn 0.5s forwards;
+    }
+    .logout {
+      background: #e74c3c;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+      animation: slideInUp 0.8s ease-out;
+    }
+    .logout:hover {
+      background: #c0392b;
+    }
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideInDown {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes slideInLeft {
+      from { transform: translateX(-50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideInUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Main Title -->
+    <h1>User</h1>
+    
+    <!-- Set Share Goal Section -->
+    <div class="section" id="shareSection">
+      <h2>Set Your Share Goal</h2>
+      <label for="account">Select Account:</label>
+      <select id="account">
+        <option value="savings">Savings Account</option>
+        <option value="investment">Investment Account</option>
+        <option value="retirement">Retirement Account</option>
+      </select>
+      <label for="company">Select Company:</label>
+      <select id="company">
+        <option value="apple">Apple Inc.</option>
+        <option value="google">Google LLC</option>
+        <option value="amazon">Amazon</option>
+        <option value="microsoft">Microsoft</option>
+        <option value="tesla">Tesla</option>
+      </select>
+      <label for="shareGoal">Future Share Goal:</label>
+      <input type="number" id="shareGoal" placeholder="Enter share goal amount" min="1">
+      <button class="btn" id="setGoalBtn">Set Goal</button>
+      <div class="goal-list" id="goalList">
+        <!-- Goals will be added here -->
+      </div>
+    </div>
+    
+    <!-- Feedback & Help Section -->
+    <div class="section" id="feedbackSection">
+      <h2>Feedback & Help</h2>
+      <label for="feedback">Your Feedback / Questions:</label>
+      <textarea id="feedback" rows="4" placeholder="Enter your feedback or help request here..."></textarea>
+      <button class="btn" id="submitFeedbackBtn">Submit Feedback</button>
+      <div class="feedback-list" id="feedbackList">
+        <!-- Feedback will be added here -->
+      </div>
+    </div>
+    
+    <!-- Logout Section -->
+    <button class="logout" id="logoutBtn">Logout</button>
+  </div>
+
+  <script>
+    // JavaScript for Share Goal Section
+    const setGoalBtn = document.getElementById('setGoalBtn');
+    const accountSelect = document.getElementById('account');
+    const companySelect = document.getElementById('company');
+    const shareGoalInput = document.getElementById('shareGoal');
+    const goalList = document.getElementById('goalList');
+
+    setGoalBtn.addEventListener('click', function() {
+      const account = accountSelect.value;
+      const company = companySelect.value;
+      const goalValue = shareGoalInput.value;
+      
+      if (!goalValue || goalValue <= 0) {
+        alert('Please enter a valid goal amount.');
+        return;
+      }
+      
+      const accountText = accountSelect.options[accountSelect.selectedIndex].text;
+      const companyText = companySelect.options[companySelect.selectedIndex].text;
+      const goalItem = document.createElement('div');
+      goalItem.className = 'goal-item';
+      goalItem.textContent = `Goal: ${goalValue} shares of ${companyText} in ${accountText}`;
+      
+      goalList.appendChild(goalItem);
+      
+      // Reset input
+      shareGoalInput.value = '';
+    });
+
+    // JavaScript for Feedback Section
+    const submitFeedbackBtn = document.getElementById('submitFeedbackBtn');
+    const feedbackInput = document.getElementById('feedback');
+    const feedbackList = document.getElementById('feedbackList');
+
+    submitFeedbackBtn.addEventListener('click', function() {
+      const feedbackText = feedbackInput.value.trim();
+      if (feedbackText === '') {
+        alert('Please enter your feedback or question.');
+        return;
+      }
+      
+      const feedbackItem = document.createElement('div');
+      feedbackItem.className = 'feedback-item';
+      feedbackItem.textContent = `Feedback: ${feedbackText}`;
+      
+      feedbackList.appendChild(feedbackItem);
+      
+      // Reset input
+      feedbackInput.value = '';
+    });
+
+    // JavaScript for Logout Button
+    const logoutBtn = document.getElementById('logoutBtn');
+    logoutBtn.addEventListener('click', function() {
+      alert('You have been logged out.');
+      // In a real application, redirect to a login page or clear session data.
+    });
+  </script>
+</body>
+</html>

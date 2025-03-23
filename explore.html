@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Dashboard</title>
+      <style>
+          body {
+              font-family: Arial, sans-serif;
+              margin: 0;
+              padding: 0;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              background: linear-gradient(135deg, #e0f7e0, #f0f0f0); /* Green gradient background */
+          }
+          .section {
+              width: 80%;
+              margin: 20px 0;
+              padding: 20px;
+              border: 1px solid #ccc;
+              border-radius: 8px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+              background-color: #ffffff; /* White background for sections */
+              color: #004d00; /* Dark green text color */
+              text-align: center; /* Center align text */
+              transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+              overflow: hidden;
+              transform: scale(1); /* Default scale */
+              opacity: 0; /* Initially hidden */
+          }
+          .section:hover {
+              transform: scale(1.05); /* Enlarge on hover */
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+              opacity: 1; /* Reveal content on hover */
+          }
+          h2 {
+              margin-top: 0;
+              color: #008000; /* Green color for headings */
+          }
+          canvas {
+              max-width: 80%; /* Default size for charts */
+              height: auto;
+          }
+          #pieChart {
+              max-width: 60%; /* Smaller size for the pie chart */
+          }
+      </style>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+      <div class="section" id="money-secure">
+          <h2>Money Secure</h2>
+          <div class="section-content">
+              <p>Investing your money in our application is not just a choice; it’s a step toward a secure and prosperous financial future.</p>
+              <p>We prioritize your security with cutting-edge encryption, multi-layered authentication, and real-time fraud detection, ensuring that your investments remain protected at all times.</p>
+              <p>Our platform is built with the highest industry standards, trusted by experts, and rigorously tested to withstand any security threats.</p>
+              <p>With transparent transactions, AI-driven risk assessment, and a dedicated security team monitoring every activity, you can invest with confidence, knowing that your hard-earned money is in safe hands.</p>
+          </div>
+      </div>
+
+      <div class="section" id="app-security">
+          <h2>Security Provided by Our Application</h2>
+          <div class="section-content">
+              <p>Our application is more than just a stock market guide; it is your personal financial advisor, ensuring that your investments are not only profitable but also secure.</p>
+              <p>We implement top-tier security measures, including end-to-end encryption, multi-factor authentication, and AI-powered risk detection to safeguard your transactions.</p>
+              <p>With real-time fraud monitoring, our system continuously scans for any suspicious activities, instantly notifying you of potential threats.</p>
+              <p>Our AI-driven market analysis helps identify the safest investment opportunities, providing expert recommendations based on deep market insights and historical data.</p>
+              <p>We believe in transparency, so every transaction you make is logged securely, ensuring full traceability and reliability.</p>
+              <p>With a dedicated security team working around the clock, we ensure that your financial future remains protected, allowing you to invest with absolute confidence.</p>
+          </div>
+      </div>
+
+      <div class="section" id="secure-ai-griffin">
+          <h2>Secure AI Griffin</h2>
+          <div class="section-content">
+              <p>Secure AI Griffin is an advanced AI-driven system designed to analyze, predict, and secure your investments in the stock market.</p>
+              <p>Our AI leverages machine learning, big data analysis, and predictive algorithms to identify the best stocks for future investment, ensuring that you make informed and profitable decisions.</p>
+              <p>By processing historical market trends, real-time stock data, and global financial patterns, AI Griffin predicts high-potential stocks while assessing risk factors to help you avoid bad investments.</p>
+              <p>Security is at the core of AI Griffin—it not only provides intelligent stock recommendations but also protects your investment strategies with data encryption, secure transaction monitoring, and AI-powered fraud detection.</p>
+              <p>Whether you're a seasoned investor or a beginner, AI Griffin acts as your virtual financial advisor, guiding you toward safer and more profitable investments with confidence.</p>
+          </div>
+      </div>
+
+      <div class="section" id="charts">
+          <h2>Accurate Flow Charts and Pie Charts</h2>
+          <div class="section-content">
+              <p>Today's Date: <span id="today-date"></span></p>
+              <canvas id="lineChart"></canvas>
+              <canvas id="pieChart"></canvas>
+          </div>
+      </div>
+
+      <div class="section" id="stock-security-percentage">
+          <h2>Stock Security in Terms of Percentage</h2>
+          <div class="section-content">
+              <p>Visual representation of stock security in terms of percentage:</p>
+              <div class="progress-bar">
+                  <div class="progress-bar-fill">75%</div>
+              </div>
+          </div>
+      </div>
+
+      <div class="section" id="stock-security-time">
+          <h2>Stock Security in Terms of Time</h2>
+          <div class="section-content">
+              <canvas id="timeChart"></canvas>
+          </div>
+      </div>
+
+      <script>
+          // Set today's date
+          const today = new Date();
+          document.getElementById('today-date').textContent = today.toDateString();
+
+          // Line chart data for stock prediction
+          const lineChartData = {
+              labels: [
+                  today.toDateString(),
+                  new Date(today.getTime() + 5 * 24 * 60 * 60 * 1000).toDateString(),
+                  new Date(today.getTime() + 10 * 24 * 60 * 60 * 1000).toDateString(),
+                  new Date(today.getTime() + 15 * 24 * 60 * 60 * 1000).toDateString(),
+                  new Date(today.getTime() + 20 * 24 * 60 * 60 * 1000).toDateString(),
+                  new Date(today.getTime() + 25 * 24 * 60 * 60 * 1000).toDateString()
+              ],
+              datasets: [{
+                  label: 'Stock Prediction',
+                  data: [100, 105, 110, 115, 120, 125],
+                  borderColor: '#008000',
+                  fill: false
+              }]
+          };
+
+          // Pie chart data
+          const pieChartData = {
+              labels: ['Tech', 'Finance', 'Healthcare', 'Energy'],
+              datasets: [{
+                  data: [30, 25, 20, 25],
+                  backgroundColor: ['#008000', '#00a000', '#00c000', '#00e000']
+              }]
+          };
+
+          // Time chart data for stock security
+          const timeChartData = {
+              labels: ['9 AM', '11 AM', '1 PM', '3 PM', '5 PM'],
+              datasets: [{
+                  label: 'Stock Value',
+                  data: [100, 95, 105, 90, 110],
+                  borderColor: '#ff0000',
+                  fill: false
+              }]
+          };
+
+          // Create line chart
+          const lineCtx = document.getElementById('lineChart').getContext('2d');
+          new Chart(lineCtx, {
+              type: 'line',
+              data: lineChartData
+          });
+
+          // Create pie chart
+          const pieCtx = document.getElementById('pieChart').getContext('2d');
+          new Chart(pieCtx, {
+              type: 'pie',
+              data: pieChartData
+          });
+
+          // Create time chart
+          const timeCtx = document.getElementById('timeChart').getContext('2d');
+          new Chart(timeCtx, {
+              type: 'line',
+              data: timeChartData
+          });
+      </script>
+  </body>
+  </html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Powered Retail Investor Dashboard</title>
+  <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+ <!-- Navigation Bar -->
+<header>
+  <nav class="navbar">
+    <div class="logo">
+      <a href="#">Cosmic</a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="protfolio.html">Portfolio</a></li>
+      <li><a href="AI-driveninsght.html">Insights</a></li>
+      <li><a href="marketupdates.html">Market Updates</a></li>
+      <li>
+        <select name="USER" id="userSelect" onchange="handleUserSelection()">
+          <option value="USER">USER</option>
+          <option value="Goal">Goal</option>
+          <option value="Logout">Logout</option>
+        </select>
+      </li>
+      <script>-
+        function handleUserSelection() {
+          var select = document.getElementById("userSelect");
+          var selectedValue = select.value;
+      
+          if (selectedValue === "Logout") {
+            window.location.href = "login.html"; // Redirect to login page
+          }
+        }
+      </script>
+    </ul>
+  </nav>
+</header>
+  <!-- Welcome Section -->
+  <section class="welcome-section">
+    <h1>Welcome to Cosmic</h1>
+    <p>Your personalized AI-powered investment experience begins here.</p>
+    <button onclick="window.location.href='explore.html'">Explore Dashboard</button>
+  </section>
+
+  <!-- Key Features -->
+  <section class="features-section">
+    <h2>Key Features</h2>
+    <div class="features">
+        <a href="AI-driveninsght.html" class="feature">
+            <h3>AI-Driven Insights</h3>
+            <p>Receive real-time recommendations tailored to your portfolio.</p>
+        </a>
+        <a href="markettrend.html" class="feature">
+            <h3>Market Trends</h3>
+            <p>Analyze live trends and stay ahead in the financial game.</p>
+        </a>
+        <a href="secureplatform.html" class="feature">
+            <h3>Secure Platform</h3>
+            <p>Your data and investments are protected with top-tier security.</p>
+        </a>
+    </div>
+</section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Cosmic. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function exploreDashboard() {
+      window.location.href = "explore.html";
+    }
+  </script>
+</body>
+</html>

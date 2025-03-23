@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI-Driven Insights - Interactive Demo</title>
+  <style>
+    /* Base Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      animation: containerFadeIn 1s ease-out;
+    }
+    .header {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #2d3e50;
+      animation: headerSlideIn 1s ease-out;
+    }
+    .paragraph {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+    /* Key Points Grid */
+    .keypoints {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    .keypoint {
+      background: #27ae60;
+      color: #fff;
+      padding: 15px 20px;
+      border-radius: 5px;
+      flex: 1 1 150px;
+      cursor: pointer;
+      font-weight: bold;
+      position: relative;
+      /* Initial state for animation */
+      opacity: 0;
+      transform: translateY(20px);
+      animation: popIn 0.6s forwards;
+      animation-delay: var(--delay);
+    }
+    .keypoint:hover {
+      transform: scale(1.05);
+      background: #27ae60;
+    }
+    /* Detail styling and animation */
+    .detail {
+      display: none;
+      margin-top: 10px;
+      font-size: 0.85em;
+      color: #e0dffd;
+      animation: detailFadeIn 0.4s ease forwards;
+    }
+    .keypoint.active .detail {
+      display: block;
+    }
+    .footer {
+      margin-top: 25px;
+      font-size: 0.9em;
+      color: #666;
+    }
+    /* Animations */
+    @keyframes containerFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes headerSlideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    @keyframes detailFadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="header">AI-Driven Insights</h1>
+    <p class="paragraph">
+      Unlock a new dimension of data intelligence! Our AI-driven platform leverages advanced machine learning, big data analytics, and predictive modeling to transform complex datasets into actionable insights. Discover how intelligent algorithms empower decision-making and drive innovation in a rapidly evolving world.
+    </p>
+    <div id="keypoints" class="keypoints">
+      <!-- Dynamic key points will be injected by JavaScript -->
+    </div>
+    <p class="footer">* Click on a key point to dive deeper into each insight</p>
+  </div>
+
+  <script>
+    // Array of AI-driven insights as key points with details.
+    const aiInsights = [
+      { title: "Machine Learning", details: "Adaptive algorithms that learn from data and continuously improve performance." },
+      { title: "Big Data Analytics", details: "Transform vast datasets into meaningful and actionable insights." },
+      { title: "Predictive Modeling", details: "Forecast trends and behaviors with precision through data-driven models." },
+      { title: "Automation", details: "Streamline processes with intelligent automation tailored to your needs." },
+      { title: "NLP", details: "Harness natural language processing to understand and derive value from human language." }
+    ];
+
+    const keypointsContainer = document.getElementById('keypoints');
+
+    // Dynamically create and animate each key point element.
+    aiInsights.forEach((insight, index) => {
+      const keypointEl = document.createElement('div');
+      keypointEl.className = 'keypoint';
+      // Set a custom animation delay for a staggered entrance effect.
+      keypointEl.style.setProperty('--delay', `${index * 0.2}s`);
+      keypointEl.textContent = insight.title;
+
+      const detailEl = document.createElement('div');
+      detailEl.className = 'detail';
+      detailEl.textContent = insight.details;
+      keypointEl.appendChild(detailEl);
+
+      // Toggle detailed info with animated reveal on click.
+      keypointEl.addEventListener('click', () => {
+        keypointEl.classList.toggle('active');
+      });
+
+      keypointsContainer.appendChild(keypointEl);
+    });
+  </script>
+</body>
+</html>

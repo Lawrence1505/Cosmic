@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Stock Market Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        canvas {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <h2>Virtual Stock Market</h2>
+    <canvas id="stockChart"></canvas>
+
+    <script>
+        const ctx = document.getElementById('stockChart').getContext('2d');
+        let stockData = [];
+        let price = 100;
+        let currentMonth = 0;
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        let currentDay = 1;
+        let daysInMonth = monthDays[currentMonth];
+
+        function generateCandleData() {
+            let open = price;
+            let close = open + (Math.random() - 0.5) * 10;
+            let high = Math.max(open, close) + Math.random() * 5;
+            let low = Math.min(open, close) - Math.random() * 5;
+            price = close;
+            return { x: new Date(), o: open, h: high, l: low, c: close };
+        }
+
+        for (let i = 0; i < daysInMonth; i++) {
+            stockData.push(generateCandleData());
+        }
+
+        const stockChart = new Chart(ctx, {
+            type: 'candlestick',
+            data: {
+                datasets: [{
+                    label: 'Stock Price',
+                    data: stockData,
+                    color: {
+                        up: 'green',
+                        down: 'red',
+                        unchanged: 'gray'
+                    }
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'timeseries',
+                        time: {
+                            unit: 'day'
+                        }
+                    },
+                    y: {
+                        beginAtZero: false,
+                        suggestedMin: 80,
+                        suggestedMax: 120
+                    }
+                }
+            }
+        });
+
+        setInterval(() => {
+            stockData.push(generateCandleData());
+            currentDay++;
+
+            if (currentDay > daysInMonth) {
+                currentMonth = (currentMonth + 1) % 12;
+                daysInMonth = monthDays[currentMonth];
+                currentDay = 1;
+            }
+
+            if (stockData.length > 30) {
+                stockData.shift();
+            }
+
+            stockChart.update();
+        }, 1000);
+    </script>
+</body>
+</html>

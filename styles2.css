@@ -1,0 +1,136 @@
+/* Global Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+  }
+  
+  /* Navigation Bar */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #333;
+    color: white;
+  }
+  
+  .navbar .logo a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-size: 1.8em;
+    font-weight: bold;
+  }
+  
+  .navbar ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar ul li {
+    margin: 0 10px;
+  }
+  
+  .navbar ul li a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .navbar ul li a:hover {
+    color: #4CAF50;
+  }
+  
+  /* Welcome Section */
+  .welcome-section {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(to right, #4CAF50, #45a049);
+    color: white;
+  }
+  
+  .welcome-section h1 {
+    font-size: 3em;
+  }
+  
+  .welcome-section p {
+    font-size: 1.2em;
+  }
+  
+  .welcome-section button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: white;
+    color: #4CAF50;
+    border: none;
+    font-size: 1em;
+    cursor: pointer;
+  }
+  
+  .welcome-section button:hover {
+    background-color: #333;
+    color: white;
+  }
+  
+  /* Features Section */
+  .features-section {
+    text-align: center;
+    padding: 50px 20px;
+  }
+  
+  .features-section h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+  
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .feature {
+    flex: 1 1 300px;
+    margin: 20px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .feature h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .feature p {
+    color: #555;
+  }
+  
+  .feature {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+  
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+  }
+  

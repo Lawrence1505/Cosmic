@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Market Trends - Interactive Overview</title>
+  <style>
+    /* Base Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #f6f9fc 0%, #e9eff5 100%);
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      animation: containerFadeIn 1s ease-out;
+    }
+    .header {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #2c3e50;
+      animation: headerSlideIn 1s ease-out;
+    }
+    .paragraph {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+    /* Key Points Grid */
+    .keypoints {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    .keypoint {
+      background: #27ae60;
+      color: #fff;
+      padding: 15px 20px;
+      border-radius: 5px;
+      flex: 1 1 150px;
+      cursor: pointer;
+      font-weight: bold;
+      position: relative;
+      /* Start hidden, then animate in with a custom delay */
+      opacity: 0;
+      transform: translateY(20px);
+      animation: popIn 0.6s forwards;
+      animation-delay: var(--delay);
+    }
+    .keypoint:hover {
+      transform: scale(1.05);
+      background: #27ae60b9;
+    }
+    /* Detail styling and animation */
+    .detail {
+      display: none;
+      margin-top: 10px;
+      font-size: 0.85em;
+      color: #ecf0f1;
+      animation: detailFadeIn 0.4s ease forwards;
+    }
+    .keypoint.active .detail {
+      display: block;
+    }
+    .footer {
+      margin-top: 25px;
+      font-size: 0.9em;
+      color: #777;
+    }
+    /* Animations */
+    @keyframes containerFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes headerSlideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    @keyframes detailFadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="header">Market Trends</h1>
+    <p class="paragraph">
+      Stay ahead of the game by exploring emerging market trends that reshape industries and consumer behaviors. Discover key insights driving innovation, disruption, and global expansion—all at a glance.
+    </p>
+    <div id="keypoints" class="keypoints">
+      <!-- Dynamic key points will be inserted here -->
+    </div>
+    <p class="footer">* Click on a key point to see more insights</p>
+  </div>
+
+  <script>
+    // Define the market trends as key points with additional details.
+    const trends = [
+      { title: "Innovation", details: "Embrace groundbreaking ideas and new technologies that redefine industries." },
+      { title: "Data-Driven", details: "Leverage analytics to uncover insights and fuel smarter decision making." },
+      { title: "Disruption", details: "Challenge the status quo with disruptive business models and strategies." },
+      { title: "Sustainability", details: "Adopt eco-friendly practices for long-term growth and environmental stewardship." },
+      { title: "Global Reach", details: "Expand your boundaries and connect to markets around the world." }
+    ];
+
+    const keypointsContainer = document.getElementById('keypoints');
+
+    // Dynamically create and animate each key point element.
+    trends.forEach((trend, index) => {
+      const keypointEl = document.createElement('div');
+      keypointEl.className = 'keypoint';
+      // Set a custom animation delay for a staggered entrance effect.
+      keypointEl.style.setProperty('--delay', `${index * 0.2}s`);
+      keypointEl.textContent = trend.title;
+
+      const detailEl = document.createElement('div');
+      detailEl.className = 'detail';
+      detailEl.textContent = trend.details;
+      keypointEl.appendChild(detailEl);
+
+      // Toggle the detailed info display with an animated reveal on click.
+      keypointEl.addEventListener('click', () => {
+        keypointEl.classList.toggle('active');
+      });
+
+      keypointsContainer.appendChild(keypointEl);
+    });
+  </script>
+</body>
+</html>
